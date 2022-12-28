@@ -1,0 +1,42 @@
+<form [formGroup]="form">
+	<!-- X -->
+	<div formArrayName="Xs">
+		<div *ngFor="let X of form['controls'].Xs['controls']; let ix=index">
+			<div formGroupName="{{ix}}" class="Xs">
+				<input type="text" formControlName="X">
+				<p>{{ formErrors.Xs[ix].X }}</p>
+				<!-- Y -->
+				<div formArrayName="Ys">
+					<div *ngFor="let Y of X['controls'].Ys['controls']; let iy=index">
+						<div formGroupName="{{iy}}" class="Ys">
+							<input type="text" formControlName="Y1">
+							<p> {{ formErrors.Xs[ix].Ys[iy].Y1 }}</p>
+							<input type="text" formControlName="Y2">
+							<p>{{ formErrors.Xs[ix].Ys[iy].Y2 }}</p>
+
+							<!-- Z -->
+							<div formArrayName="Zs">
+								<div *ngFor="let Z of Y['controls'].Zs['controls']; let iz=index">
+									<div formGroupName="{{iz}}" class="Zs">
+										<input type="text" formControlName="Z">
+										<p>{{ formErrors.Xs[ix].Ys[iy].Zs[iz].Z }}</p>
+									</div>
+								</div>
+								<input type="button" (click)="addZ(ix,iy)" value="Add Z">
+							</div>
+							<!-- Z End -->
+
+						</div>
+					</div>
+					<input type="button" (click)="addY(ix)" value="Add Y">
+				</div>
+				<!-- Y End-->
+			</div>
+		</div>
+		<input type="button" (click)="addX()" value="Add X">
+	</div>
+	<!-- X End -->
+	<form>
+
+		<h5>Field Values</h5>
+		<pre style="font-size:15px">{{ form.value | json }}</pre>
